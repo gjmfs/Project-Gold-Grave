@@ -5,16 +5,29 @@ import menu from "../assets/icons/menu.svg";
 import close from "../assets/icons/close.svg";
 import zt from "../assets/images/zt.jpg";
 
-const score = JSON.parse(localStorage.getItem("gamedata"));
-
 export const NavBar = () => {
+  const storedGameData = localStorage.getItem("gamedata");
+  let score = "";
+
+  if (storedGameData) {
+    try {
+      score = JSON.parse(storedGameData);
+    } catch (error) {
+      console.error("Error parsing game data:", error);
+    }
+  }
   return (
     <nav>
       <NavLink to="/home">
         <img id="logo" src={zt} alt="logo" />
-
-        <NavLink>User_Name: {score.username}</NavLink>
-        <NavLink>High_Score: {score.score}</NavLink>
+        {score && score.username ? (
+          <>
+            {score.username}
+            <span style={{ marginLeft: "5px" }}>High Score: {score.score}</span>
+          </>
+        ) : (
+          "none"
+        )}
       </NavLink>
 
       <input type="checkbox" id="sidebar-active" />

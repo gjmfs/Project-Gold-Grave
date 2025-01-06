@@ -15,11 +15,11 @@ export const Login = () => {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(username, password);
-
+    console.log(username, password || "hi");
     await axios
       .post("http://34.233.134.72:4001/api/user/login", { username, password })
       .then((data) => {
+        console.log(data.data);
         if (!data.data == 0) {
           localStorage.setItem("user", JSON.stringify(data.data[0]));
           localStorage.setItem("gamedata", JSON.stringify(data.data[1]));
