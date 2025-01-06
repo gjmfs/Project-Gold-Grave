@@ -1,0 +1,21 @@
+.Leader {
+  background-image: url("../assets/images/gamebg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  width: 100%;
+  padding: 20px;
+}
+
+.Leader table th,
+td {
+  background-color: rgba(0, 255, 255, 0.7);
+}
+.Leader table tbody td {
+  background-color: rgba(255, 208, 0, 0.7);
+}
+.Leader #gameName {
+  font-size: clamp(36px, 40px, 1.2vw);
+  color: var(--blue-l);
+}

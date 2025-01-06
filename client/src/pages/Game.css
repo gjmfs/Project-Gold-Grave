@@ -1,0 +1,285 @@
+.Game {
+  text-align: center;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: "IrishGrover";
+  background-image: url("../assets/images/gamebg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 100;
+  left: 0;
+  overflow-y: scroll;
+}
+
+/* Game Grid and Cells */
+.game-cell {
+  aspect-ratio: 1;
+  perspective: 1000px;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.game-cell.revealed {
+  cursor: not-allowed;
+}
+
+.cell-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.game-cell.revealed .cell-content {
+  transform: rotateY(180deg);
+}
+
+.cell-front,
+.cell-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cell-front {
+  background-image: url("../assets/images/grave.png");
+  color: white;
+  font-size: 2em;
+  font-weight: bold;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.cell-back {
+  background-color: white;
+  transform: rotateY(180deg);
+  padding: 10px;
+}
+
+.cell-back img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Loading and Error States */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #ff0000;
+  font-size: 1.2rem;
+}
+
+/* Score Display */
+.score-display {
+  background-color: #fff;
+  padding: 15px 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  display: inline-block;
+  transition: transform 0.3s ease;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.score-display.updated {
+  transform: scale(1.1);
+}
+
+/* Settings Panel */
+.settings-control {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.settings-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px;
+  margin-top: 75px;
+  transition: transform 0.3s ease;
+}
+
+.settings-button:hover {
+  transform: scale(1.1);
+}
+
+.settings-panel {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+}
+
+.setting-item {
+  margin: 15px 0;
+}
+
+.sound-toggle {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.sound-toggle:hover {
+  background-color: #f0f0f0;
+}
+
+.volume-slider {
+  width: 100%;
+  height: 5px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #d3d3d3;
+  outline: none;
+  border-radius: 3px;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: #2c3e50;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  background: #2c3e50;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+/* Game Over State */
+.game-over {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: rgb(219, 0, 0);
+  padding: 20px 40px;
+  border-radius: 10px;
+  font-size: 24px;
+  z-index: 1000;
+  animation: fadeIn 0.5s ease-in;
+}
+
+/* Game Title */
+.Game #gameName {
+  color: var(--blue-l);
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Game Container */
+.gamePad {
+  margin-top: 30px;
+}
+
+/* Grid Container */
+.container.gamePad > div {
+  display: grid;
+  gap: 10px;
+  padding: 20px;
+  width: 100%;
+  max-width: 80vw;
+  margin: 0 auto;
+}
+
+/* Hover Effects */
+.game-cell:not(.revealed):hover .cell-content {
+  transform: scale(1.05);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .game-cell {
+    font-size: 0.8em;
+  }
+
+  .Game #gameName {
+    font-size: 2rem;
+  }
+
+  .score-display {
+    font-size: 1.2rem;
+    padding: 10px 20px;
+  }
+
+  .settings-panel {
+    min-width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container.gamePad > div {
+    max-width: 95vw;
+    gap: 5px;
+    padding: 10px;
+  }
+
+  .game-cell {
+    font-size: 0.7em;
+  }
+}
+.Game a {
+  text-decoration: none;
+  background-color: var(--blue-l);
+  padding: 10px 5px;
+  color: var(--dark);
+  border-radius: 12px;
+}

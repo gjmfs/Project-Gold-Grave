@@ -1,0 +1,45 @@
+.Home {
+  font-family: "IrishGrover";
+  background-image: url("../assets/images/homebg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  top: 100;
+  left: 0;
+}
+.Home #gameName {
+  color: var(--dark);
+}
+.level-row {
+  padding-top: 100px;
+  padding-bottom: 20px;
+}
+.Home .level {
+  background-color: var(--blue-l);
+  margin: 10px;
+  height: 150px;
+  width: 150px;
+}
+.level,
+.sec-row {
+  border-radius: 12px;
+  font-size: clamp(24px, 28px, 2vw);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: var(--orange-light);
+}
+.sec-row {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  background-color: var(--blue-l);
+  margin: 10px;
+  height: 75px;
+}

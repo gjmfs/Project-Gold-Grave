@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "IrishGrover";
+  src: url("./assets/fonts/IrishGrover-Regular.ttf");
+}
+:root {
+  --dark: #001219;
+  --light: #fff;
+  --orange-light: #ee9b00;
+  --orange-dark: #ca6702;
+  --blue-m: #005f73;
+  --blue-o: rgba(10, 147, 150, 0.8);
+  --blue-l: rgb(10, 147, 150);
+}
+
+* {
+  font-family: "IrishGrover";
+}

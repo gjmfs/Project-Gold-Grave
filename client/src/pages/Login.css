@@ -1,0 +1,63 @@
+.Login {
+  font-family: "IrishGrover";
+  background-image: url("../assets/images/introBG.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.Login .container {
+  margin-top: 10vh;
+  margin-bottom: 30px;
+  color: var(--light);
+  background: var(--blue-o);
+  border-radius: 12px;
+}
+
+.Login .heading {
+  text-align: center;
+  font-size: clamp(46px, 48px, 3vw);
+  color: var(--orange-light);
+}
+.Login .row {
+  margin: 10px 0;
+}
+/*Hiding Number Side arrows for form input field*/
+
+/*For other Browsers*/
+.Login input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/*For Firefox*/
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+/*Hiding end*/
+.Login .subHead {
+  font-size: clamp(26px, 30px, 2vw);
+}
+.Login .btn {
+  background-color: var(--dark);
+  color: var(--orange-light);
+  font-size: clamp(24px, 28px, 2vw);
+  height: 75px;
+  width: 250px;
+}
+.Login .btn:hover {
+  background-color: var(--orange-dark);
+}
+.Login .link {
+  color: var(--orange-light);
+  text-decoration: none;
+  font-size: clamp(24px, 28px, 1.2vw);
+}
