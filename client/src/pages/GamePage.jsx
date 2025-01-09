@@ -244,7 +244,7 @@ export const GamePage = () => {
               onClick={() => handleClick(index, item)}
             >
               <div className="cell-content">
-                <div className="cell-front">?</div>
+                <div className="cell-front"></div>
                 <div className="cell-back">
                   {item === 1 ? (
                     <img src={zombie} alt="zombie" className="img-fluid" />

@@ -31,7 +31,7 @@ export const Home = () => {
 
   return (
     <div className="Home">
-      z
+      
       <h1 id="gameName" className="mt-5">
         Gold Grave
       </h1>
