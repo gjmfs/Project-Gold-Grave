@@ -99,7 +99,7 @@ export const GamePage = () => {
 
         // Fetch initial game data
         const response = await axios.get(
-          `http://localhost:4001/api/game/mode?mode=${currentLevel}`
+          `http://34.233.134.72:4001/api/game/mode?mode=${currentLevel}`
         );
 
         if (response.data) {
@@ -137,7 +137,7 @@ export const GamePage = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:4001/api/game/mode?mode=${newLevel}`
+        `http://34.233.134.72:4001/api/game/mode?mode=${newLevel}`
       );
 
       if (response.data) {
