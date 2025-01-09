@@ -7,7 +7,7 @@ import zt from "../assets/images/zt.jpg";
 
 export const NavBar = () => {
   const storedGameData = localStorage.getItem("gamedata");
-  let score = "";
+  let score;
 
   if (storedGameData) {
     try {
@@ -23,7 +23,7 @@ export const NavBar = () => {
         {score && score.username ? (
           <>
             {score.username}
-            <span style={{ marginLeft: "5px" }}>High Score: {score.score}</span>
+            <span style={{ marginLeft: "5px" }}> {score.score}</span>
           </>
         ) : (
           "none"

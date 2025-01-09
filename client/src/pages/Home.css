@@ -14,6 +14,7 @@
 }
 .Home #gameName {
   color: var(--dark);
+  text-shadow: 2px 2px var(--orange-light);
 }
 .level-row {
   padding-top: 100px;
@@ -24,6 +25,7 @@
   margin: 10px;
   height: 150px;
   width: 150px;
+  text-shadow: 2px 2px var(--dark);
 }
 .level,
 .sec-row {
@@ -32,6 +34,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  text-shadow: 2px 2px var(--dark);
   text-decoration: none;
   color: var(--orange-light);
 }

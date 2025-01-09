@@ -20,7 +20,7 @@
   font-size: clamp(64px, 68px, 2vw);
   color: var(--dark);
   text-align: center;
-  margin-top: 100px;
+  margin-top: 10px;
 }
 .WelcomePage .button {
   text-align: center;
@@ -37,4 +37,8 @@
   background-color: var(--dark);
   color: var(--light);
   box-shadow: 10px 10px var(--blue-l);
+}
+.WelcomePage h3 {
+  color: var(--dark);
+  text-shadow: 2px 2px #ba181b;
 }

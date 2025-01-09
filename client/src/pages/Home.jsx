@@ -1,7 +1,6 @@
 import "./Home.css";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -13,25 +12,12 @@ export const Home = () => {
   }, []);
 
   const gameChoose = async (mode) => {
-    axios
-      .get(`http://34.233.134.72:4001/api/game/mode?mode=${mode}`)
-      .then((data) => {
-        localStorage.setItem("game", JSON.stringify(data.data));
-        localStorage.setItem(
-          "coins",
-          data.data.filter((value) => value === 0).length
-        );
-        localStorage.setItem("level", mode);
-        navigate("/game");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    localStorage.setItem("mode", mode);
+    navigate("/game");
   };
 
   return (
     <div className="Home">
-      
       <h1 id="gameName" className="mt-5">
         Gold Grave
       </h1>
@@ -43,33 +29,21 @@ export const Home = () => {
               gameChoose("easy");
             }}
           >
-            Easy
-          </div>
-          <div
-            className=" level"
-            onClick={() => {
-              gameChoose("medium");
-            }}
-          >
-            Medium
-          </div>
-          <div
-            className=" level"
-            onClick={() => {
-              gameChoose("hard");
-            }}
-          >
-            Hard
+            Play
           </div>
         </div>
 
-        <div className="row d-flex justify-content-center">
-          <Link to="/instructions" className="col sec-row">
-            Instructions
-          </Link>
-          <Link to="/leaderboard" className="col sec-row">
-            Leader Board
-          </Link>
+        <div className="row row-cols-1 row-cols-lg-2 row-cols-md-2 d-flex justify-content-center">
+          <div className="col">
+            <Link to="/instructions" className="col sec-row">
+              Instructions
+            </Link>
+          </div>
+          <div className="col">
+            <Link to="/leaderboard" className="col sec-row">
+              Leader Board
+            </Link>
+          </div>
         </div>
       </div>
     </div>

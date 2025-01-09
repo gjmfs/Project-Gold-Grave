@@ -39,7 +39,7 @@ export const LeaderPage = () => {
   return (
     <div className="Leader">
       <h2 className="text-center mb-3 mt-3" id="gameName">
-        Leaderboard
+        Luckiest People <br /> Ever Exisist
       </h2>
       <table className="table">
         <thead>

@@ -62,7 +62,7 @@ const SettingsPanel = ({
 export const GamePage = () => {
   const navigate = useNavigate();
   const [chance, setChance] = useState(0);
-  const [coins, setCoins] = useState();
+  const [coins, setCoins] = useState(0);
   const [username, setUsername] = useState("");
   const [gameData, setGameData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -74,54 +74,112 @@ export const GamePage = () => {
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   const [volume, setVolume] = useState(1);
   const [showSettings, setShowSettings] = useState(false);
-  const [res, setRes] = useState();
+  const [res, setRes] = useState(null);
+  const [level, setLevel] = useState("easy");
 
   const [goldAudio] = useState(new Audio(goldSound));
   const [zombieAudio] = useState(new Audio(zombieSound));
 
+  // Initial data fetch
+  useEffect(() => {
+    const initializeGame = async () => {
+      try {
+        const userString = localStorage.getItem("user");
+        if (!userString) {
+          navigate("/login");
+          return;
+        }
+
+        const userData = JSON.parse(userString);
+        setUsername(userData.name);
+
+        // Set initial level if not exists
+        const currentLevel = localStorage.getItem("mode") || "easy";
+        setLevel(currentLevel);
+
+        // Fetch initial game data
+        const response = await axios.get(
+          `http://localhost:4001/api/game/mode?mode=${currentLevel}`
+        );
+
+        if (response.data) {
+          const gameData = response.data;
+          localStorage.setItem("game", JSON.stringify(gameData));
+          const coinCount = gameData.filter((value) => value === 0).length;
+          localStorage.setItem("coins", coinCount);
+          localStorage.setItem("mode", currentLevel);
+
+          setGameData(gameData);
+          setCoins(coinCount);
+
+          // Set grid size
+          const squareRoot = Math.floor(Math.sqrt(gameData.length));
+          setGridSize(squareRoot);
+        }
+      } catch (error) {
+        console.error("Error initializing game:", error);
+        setError("Failed to initialize game");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initializeGame();
+  }, [navigate]);
+
+  // Audio volume effect
   useEffect(() => {
     goldAudio.volume = volume;
     zombieAudio.volume = volume;
   }, [volume, goldAudio, zombieAudio]);
 
-  useEffect(() => {
+  const levelDataReq = async (newLevel) => {
+    setIsLoading(true);
     try {
-      const userString = localStorage.getItem("user");
-      const storedCoins = localStorage.getItem("coins");
-      if (!userString || !storedCoins) {
-        navigate("/login");
-        return;
-      }
+      const response = await axios.get(
+        `http://localhost:4001/api/game/mode?mode=${newLevel}`
+      );
 
-      setCoins(parseInt(storedCoins));
-      const userData = JSON.parse(userString);
-      setUsername(userData.name);
+      if (response.data) {
+        const newGameData = response.data;
+        localStorage.setItem("game", JSON.stringify(newGameData));
+        localStorage.setItem(
+          "coins",
+          newGameData.filter((value) => value === 0).length
+        );
+        localStorage.setItem("mode", newLevel);
 
-      const data = JSON.parse(localStorage.getItem("game")) || [];
-      setGameData(data);
-
-      if (data.length > 0) {
-        const squareRoot = Math.floor(Math.sqrt(data.length));
-        setGridSize(squareRoot);
+        // Update state before reload
+        setGameData(newGameData);
+        setLevel(newLevel);
+        window.location.reload();
       }
     } catch (error) {
-      console.error("Error loading game data:", error);
-      setError("Failed to load game data");
+      console.error("Error fetching new level data:", error);
+      setError("Failed to load new level");
     } finally {
       setIsLoading(false);
     }
-  }, [navigate]);
+  };
 
-  const playSound = (audio) => {
-    if (isSoundEnabled) {
-      audio.currentTime = 0;
-      audio.play().catch((error) => {
-        console.log("Audio play failed:", error);
-      });
+  const gameWin = () => {
+    const levels = {
+      easy: "medium",
+      medium: "hard",
+      hard: "insane",
+    };
+    const nextLevel = levels[level];
+    if (nextLevel) {
+      levelDataReq(nextLevel);
     }
   };
 
   const handleGameOver = async () => {
+    if (!username || typeof score !== "number") {
+      setError("Invalid game state");
+      return;
+    }
+
     try {
       const response = await axios.post(
         "http://34.233.134.72:4001/api/game/score",
@@ -130,12 +188,23 @@ export const GamePage = () => {
           score,
         }
       );
-      setRes(response.data.updated);
+
+      if (response.data) {
+        setRes(response.data.updated);
+      }
     } catch (error) {
       console.error("Error saving score:", error);
-      alert("Error saving score");
+      setError("Failed to save score");
     }
-    localStorage.removeItem("game");
+  };
+
+  const playSound = (audio) => {
+    if (isSoundEnabled) {
+      audio.currentTime = 0;
+      audio.play().catch((error) => {
+        console.error("Audio play failed:", error);
+      });
+    }
   };
 
   const handleClick = (index, itemType) => {
@@ -152,15 +221,14 @@ export const GamePage = () => {
     } else if (itemType === 0) {
       playSound(goldAudio);
       setScore((prevScore) => prevScore + 100);
-      setChance((prevChance) => prevChance + 1);
-
-      if (chance === coins - 1) {
-        alert("You won!");
-        localStorage.removeItem("game");
-        localStorage.removeItem("coins");
-        handleGameOver();
-        navigate("/home");
-      }
+      setChance((prevChance) => {
+        const newChance = prevChance + 1;
+        if (newChance === coins - 1) {
+          alert("You won!");
+          gameWin();
+        }
+        return newChance;
+      });
     }
   };
 
@@ -206,9 +274,9 @@ export const GamePage = () => {
         <div className="game-over">
           {res ? (
             <div>
-              New High Score: ${score}! <br />
+              New High Score: {score}! <br />
               <Link
-                to={"/home"}
+                to="/home"
                 onClick={() => {
                   localStorage.removeItem("game");
                 }}
@@ -218,15 +286,15 @@ export const GamePage = () => {
             </div>
           ) : (
             <div>
-              Game Over! Your score: ${score}
+              Game Over! Your score: {score}
               <br />
               <Link
-                to={"/home"}
+                to="/home"
                 onClick={() => {
                   localStorage.removeItem("game");
                 }}
               >
-                Home
+                Give Up
               </Link>
             </div>
           )}

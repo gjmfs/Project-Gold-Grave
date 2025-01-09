@@ -32,17 +32,17 @@ export const Instruction = () => {
       <div className="inst">
         <p className="head">How to Play</p>
         <p className="body">
-          It's a simple game. You have to choose what kind a level you wish to
-          play. and then you have to belive in your luck and pick up the
-          cemeteries.
+          It's a simple game. Just Start the game and then you have to belive in
+          your luck and pick up the cemeteries.
         </p>
       </div>
       <div className="inst">
         <p className="head">About Game Algorithm</p>
         <p className="body">
-          It's a simple game. You have to choose what kind a level you wish to
-          play. and then you have to belive in your luck and pick up the
-          cemeteries.
+          This game is starting from easy and it's have 4 levels. easy, medium,
+          hard, insane. <br />
+          you need to win a level for level up. Let's give it a try and Know how
+          lucky You are...
         </p>
       </div>
       <div className="inst">
@@ -53,6 +53,7 @@ export const Instruction = () => {
             <li>Easy Level: 7 Chances</li>
             <li>Medium Level: 17 Chances</li>
             <li>Hard Level: 34 Chances</li>
+            <li>Insane Level: 1 Chances</li>
           </ul>
           So. Better Luck Next Time.
         </p>
