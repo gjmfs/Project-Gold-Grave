@@ -20,6 +20,7 @@ const generateGame = (size, enemies) => {
 const gameMode = async (req, res) => {
   try {
     const { mode } = req.query;
+    console.log(mode);
     let gameData;
     switch (mode) {
       case "easy":
@@ -31,9 +32,13 @@ const gameMode = async (req, res) => {
       case "hard":
         gameData = generateGame(8, 30); // 8x8 grid, 30 enemies
         break;
+      case "insane":
+        gameData = generateGame(12, 1);
+        break;
       default:
         gameData = generateGame(3, 2); // Default to easy mode
     }
+    console.log(gameData);
     res.json(gameData);
   } catch (error) {
     console.error("Error generating game:", error);
