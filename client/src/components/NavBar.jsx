@@ -4,18 +4,20 @@ import "./NavBar.css";
 import menu from "../assets/icons/menu.svg";
 import close from "../assets/icons/close.svg";
 import zt from "../assets/images/zt.jpg";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 export const NavBar = () => {
-  const storedGameData = localStorage.getItem("gamedata");
-  let score;
+  let score = "";
 
-  if (storedGameData) {
-    try {
-      score = JSON.parse(storedGameData);
-    } catch (error) {
-      console.error("Error parsing game data:", error);
-    }
-  }
+  useEffect(() => {
+    const username = localStorage.getItem("username");
+    console.log(username);
+    axios.post("http://localhost:4001/api/game/user", username).then((data) => {
+      console.log(data.data);
+    });
+  }, []);
+
   return (
     <nav>
       <NavLink to="/home">
@@ -46,6 +48,8 @@ export const NavBar = () => {
           onClick={() => {
             localStorage.removeItem("game");
             localStorage.removeItem("user");
+            localStorage.removeItem("gamedata");
+            localStorage.removeItem("username");
           }}
         >
           Logout

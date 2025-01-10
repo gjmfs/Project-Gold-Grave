@@ -24,6 +24,7 @@
   text-align: center;
   font-size: clamp(46px, 48px, 3vw);
   color: var(--orange-light);
+  text-shadow: 2px 2px var(--dark);
 }
 .Login .row {
   margin: 10px 0;
@@ -44,7 +45,8 @@ input[type="number"] {
 }
 /*Hiding end*/
 .Login .subHead {
-  font-size: clamp(26px, 30px, 2vw);
+  font-size: clamp(16px, 24px, 2vw);
+  text-shadow: 2px 2px var(--dark);
 }
 .Login .btn {
   background-color: var(--dark);
@@ -60,4 +62,5 @@ input[type="number"] {
   color: var(--orange-light);
   text-decoration: none;
   font-size: clamp(24px, 28px, 1.2vw);
+  text-shadow: 2px 2px var(--dark);
 }

@@ -89,7 +89,10 @@ export const GamePage = () => {
           navigate("/login");
           return;
         }
-
+        let storedScore = parseInt(localStorage.getItem("score"));
+        if (storedScore > score) {
+          setScore(storedScore);
+        }
         const userData = JSON.parse(userString);
         setUsername(userData.name);
 
@@ -99,7 +102,7 @@ export const GamePage = () => {
 
         // Fetch initial game data
         const response = await axios.get(
-          `http://34.233.134.72:4001/api/game/mode?mode=${currentLevel}`
+          `http://localhost:4001/api/game/mode?mode=${currentLevel}`
         );
 
         if (response.data) {
@@ -137,7 +140,7 @@ export const GamePage = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `http://34.233.134.72:4001/api/game/mode?mode=${newLevel}`
+        `http://localhost:4001/api/game/mode?mode=${newLevel}`
       );
 
       if (response.data) {
@@ -182,7 +185,7 @@ export const GamePage = () => {
 
     try {
       const response = await axios.post(
-        "http://34.233.134.72:4001/api/game/score",
+        "http://localhost:4001/api/game/score",
         {
           username,
           score,
@@ -220,11 +223,12 @@ export const GamePage = () => {
       handleGameOver();
     } else if (itemType === 0) {
       playSound(goldAudio);
+
       setScore((prevScore) => prevScore + 100);
       setChance((prevChance) => {
         const newChance = prevChance + 1;
-        if (newChance === coins - 1) {
-          alert("You won!");
+        if (newChance === coins) {
+          localStorage.setItem("score", score);
           gameWin();
         }
         return newChance;
@@ -276,12 +280,13 @@ export const GamePage = () => {
             <div>
               New High Score: {score}! <br />
               <Link
-                to="/home"
+                to={"/home"}
                 onClick={() => {
                   localStorage.removeItem("game");
+                  localStorage.removeItem("score");
                 }}
               >
-                Home
+                Give Up
               </Link>
             </div>
           ) : (
@@ -292,6 +297,7 @@ export const GamePage = () => {
                 to="/home"
                 onClick={() => {
                   localStorage.removeItem("game");
+                  localStorage.removeItem("score");
                 }}
               >
                 Give Up

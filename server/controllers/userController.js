@@ -5,11 +5,11 @@ const game = require("../model/gameScore");
 const login = async (req, res) => {
   const { username, password } = req.body;
   const check = await user.findOne({ name: username, password: password });
-  const score = await game.findOne({ username: username });
+
   if (!check) {
     res.json(0);
   } else {
-    res.json([check, score]);
+    res.json(check);
   }
 };
 

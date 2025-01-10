@@ -104,9 +104,17 @@ const getHighScores = async (req, res) => {
   }
 };
 
+//get User score and username
+const getUserScore = async (req, res) => {
+  await GameScore.findOne({ username: req.body })
+    .then((data) => res.json(data))
+    .catch((err) => console.log(err));
+};
+
 // Export all controllers
 module.exports = {
   gameMode,
   gameScore,
   getHighScores,
+  getUserScore,
 };

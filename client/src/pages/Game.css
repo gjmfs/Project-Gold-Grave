@@ -116,7 +116,7 @@
 /* Settings Panel */
 .settings-control {
   position: fixed;
-  top: 20px;
+  top: 75px;
   right: 20px;
   z-index: 1000;
 }
@@ -127,7 +127,6 @@
   font-size: 24px;
   cursor: pointer;
   padding: 10px;
-  margin-top: 75px;
   transition: transform 0.3s ease;
 }
 
@@ -213,6 +212,7 @@
   font-size: 2.5rem;
   margin-bottom: 30px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  text-shadow: 2px 2px var(--dark);
 }
 
 /* Game Container */

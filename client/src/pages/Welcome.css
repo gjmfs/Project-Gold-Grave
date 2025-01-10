@@ -15,11 +15,13 @@
 #wel {
   font-size: clamp(44px, 48px, 2vw);
   color: var(--orange-light);
+  text-shadow: 2px 2px var(--dark);
 }
 #gameName {
   font-size: clamp(64px, 68px, 2vw);
   color: var(--dark);
   text-align: center;
+  text-shadow: 2px 2px var(--red);
   margin-top: 10px;
 }
 .WelcomePage .button {
