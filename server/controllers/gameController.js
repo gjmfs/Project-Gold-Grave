@@ -106,7 +106,11 @@ const getHighScores = async (req, res) => {
 
 //get User score and username
 const getUserScore = async (req, res) => {
-  await GameScore.findOne({ username: req.body })
+  console.log(req.body);
+
+  const { username } = await req.body;
+  console.log(username);
+  await GameScore.findOne({ username: username })
     .then((data) => res.json(data))
     .catch((err) => console.log(err));
 };

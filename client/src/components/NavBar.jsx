@@ -6,16 +6,37 @@ import close from "../assets/icons/close.svg";
 import zt from "../assets/images/zt.jpg";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const NavBar = () => {
-  let score = "";
-
+  const [score, setScore] = useState("");
+  const navigate = useNavigate();
   useEffect(() => {
-    const username = localStorage.getItem("username");
-    console.log(username);
-    axios.post("http://localhost:4001/api/game/user", username).then((data) => {
-      console.log(data.data);
-    });
+    const storedData = localStorage.getItem("username");
+    if (storedData == null) {
+      navigate("/login");
+    } else {
+      let username;
+      if (
+        storedData &&
+        storedData.startsWith('"') &&
+        storedData.endsWith('"')
+      ) {
+        username = storedData.slice(1, -1);
+      } else {
+        username = storedData;
+      }
+      console.log(username);
+      if (username.length > 0) {
+        console.log(username);
+        axios
+          .post("http://localhost:4001/api/game/user", { username })
+          .then((data) => {
+            localStorage.setItem("gamedata", JSON.stringify(data.data));
+          });
+      }
+      setScore(JSON.parse(localStorage.getItem("gamedata")));
+    }
   }, []);
 
   return (
@@ -50,6 +71,7 @@ export const NavBar = () => {
             localStorage.removeItem("user");
             localStorage.removeItem("gamedata");
             localStorage.removeItem("username");
+            localStorage.removeItem("mode");
           }}
         >
           Logout

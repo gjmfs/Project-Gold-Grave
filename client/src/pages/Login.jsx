@@ -30,6 +30,11 @@ export const Login = () => {
       .catch((err) => {
         console.log(err);
       });
+    axios
+      .post("http://localhost:4001/api/game/user", { username })
+      .then((data) => {
+        localStorage.setItem("gamedata", JSON.stringify(data.data));
+      });
   };
   return (
     <div className="Login">

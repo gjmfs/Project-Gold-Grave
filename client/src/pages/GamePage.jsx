@@ -84,7 +84,7 @@ export const GamePage = () => {
   useEffect(() => {
     const initializeGame = async () => {
       try {
-        const userString = localStorage.getItem("user");
+        const userString = localStorage.getItem("gamedata");
         if (!userString) {
           navigate("/login");
           return;
@@ -94,7 +94,7 @@ export const GamePage = () => {
           setScore(storedScore);
         }
         const userData = JSON.parse(userString);
-        setUsername(userData.name);
+        setUsername(userData.username);
 
         // Set initial level if not exists
         const currentLevel = localStorage.getItem("mode") || "easy";
@@ -178,12 +178,8 @@ export const GamePage = () => {
   };
 
   const handleGameOver = async () => {
-    if (!username || typeof score !== "number") {
-      setError("Invalid game state");
-      return;
-    }
-
     try {
+      console.log(username, score);
       const response = await axios.post(
         "http://localhost:4001/api/game/score",
         {
