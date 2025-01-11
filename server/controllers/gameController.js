@@ -115,10 +115,34 @@ const getUserScore = async (req, res) => {
     .catch((err) => console.log(err));
 };
 
+//level up
+const levelUp = async (req, res) => {
+  try {
+    const { username, level } = req.body;
+    console.log(req.body);
+
+    const updatedGameScore = await GameScore.findOneAndUpdate(
+      { username: username },
+      { $set: { level: level } },
+      { new: true }
+    );
+
+    if (!updatedGameScore) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json(updatedGameScore);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error updating level" });
+  }
+};
+
 // Export all controllers
 module.exports = {
   gameMode,
   gameScore,
   getHighScores,
   getUserScore,
+  levelUp,
 };

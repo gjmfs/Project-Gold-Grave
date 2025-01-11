@@ -7,11 +7,13 @@ const {
   gameScore,
   getHighScores,
   getUserScore,
+  levelUp,
 } = require("../controllers/gameController");
 
 router.get("/mode", gameMode);
 router.post("/score", gameScore);
 router.get("/highscores", getHighScores);
 router.post("/user", getUserScore);
+router.post("/levelup", levelUp);
 
 module.exports = router;

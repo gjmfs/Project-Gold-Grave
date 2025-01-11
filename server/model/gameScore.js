@@ -15,6 +15,11 @@ const gameScoreSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  level: {
+    type: String,
+    required: true,
+    default: "easy",
+  },
 });
 
 module.exports = mongoose.model("GameScore", gameScoreSchema);

@@ -75,16 +75,21 @@ export const GamePage = () => {
   const [volume, setVolume] = useState(1);
   const [showSettings, setShowSettings] = useState(false);
   const [res, setRes] = useState(null);
-  const [level, setLevel] = useState("easy");
+  const [level, setLevel] = useState();
 
   const [goldAudio] = useState(new Audio(goldSound));
   const [zombieAudio] = useState(new Audio(zombieSound));
 
   // Initial data fetch
   useEffect(() => {
+    const userdata = JSON.parse(localStorage.getItem("gamedata"));
+    setLevel(userdata.level);
+    localStorage.setItem("mode", userdata.level);
+    console.log(level);
     const initializeGame = async () => {
       try {
-        const userString = localStorage.getItem("gamedata");
+        const userString = await localStorage.getItem("gamedata");
+
         if (!userString) {
           navigate("/login");
           return;
@@ -97,12 +102,12 @@ export const GamePage = () => {
         setUsername(userData.username);
 
         // Set initial level if not exists
-        const currentLevel = localStorage.getItem("mode") || "easy";
-        setLevel(currentLevel);
 
         // Fetch initial game data
         const response = await axios.get(
-          `http://localhost:4001/api/game/mode?mode=${currentLevel}`
+          `http://localhost:4001/api/game/mode?mode=${localStorage.getItem(
+            "mode"
+          )}`
         );
 
         if (response.data) {
@@ -110,7 +115,6 @@ export const GamePage = () => {
           localStorage.setItem("game", JSON.stringify(gameData));
           const coinCount = gameData.filter((value) => value === 0).length;
           localStorage.setItem("coins", coinCount);
-          localStorage.setItem("mode", currentLevel);
 
           setGameData(gameData);
           setCoins(coinCount);
@@ -138,6 +142,12 @@ export const GamePage = () => {
 
   const levelDataReq = async (newLevel) => {
     setIsLoading(true);
+    const user = JSON.parse(localStorage.getItem("user"));
+    const username = user.name;
+    const level = newLevel;
+    await axios
+      .post("http://localhost:4001/api/game/levelup", { username, level })
+      .then((data) => console.log(data.data));
     try {
       const response = await axios.get(
         `http://localhost:4001/api/game/mode?mode=${newLevel}`
@@ -150,11 +160,10 @@ export const GamePage = () => {
           "coins",
           newGameData.filter((value) => value === 0).length
         );
-        localStorage.setItem("mode", newLevel);
 
         // Update state before reload
         setGameData(newGameData);
-        setLevel(newLevel);
+
         window.location.reload();
       }
     } catch (error) {
