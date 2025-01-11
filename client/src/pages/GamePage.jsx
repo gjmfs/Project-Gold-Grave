@@ -105,7 +105,7 @@ export const GamePage = () => {
 
         // Fetch initial game data
         const response = await axios.get(
-          `http://localhost:4001/api/game/mode?mode=${localStorage.getItem(
+          `http://34.233.134.72:4001/api/game/mode?mode=${localStorage.getItem(
             "mode"
           )}`
         );
@@ -146,11 +146,11 @@ export const GamePage = () => {
     const username = user.name;
     const level = newLevel;
     await axios
-      .post("http://localhost:4001/api/game/levelup", { username, level })
+      .post("http://34.233.134.72:4001/api/game/levelup", { username, level })
       .then((data) => console.log(data.data));
     try {
       const response = await axios.get(
-        `http://localhost:4001/api/game/mode?mode=${newLevel}`
+        `http://34.233.134.72:4001/api/game/mode?mode=${newLevel}`
       );
 
       if (response.data) {
@@ -190,7 +190,7 @@ export const GamePage = () => {
     try {
       console.log(username, score);
       const response = await axios.post(
-        "http://localhost:4001/api/game/score",
+        "http://34.233.134.72:4001/api/game/score",
         {
           username,
           score,

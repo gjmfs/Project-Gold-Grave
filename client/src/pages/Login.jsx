@@ -17,7 +17,7 @@ export const Login = () => {
     e.preventDefault();
     console.log(username, password || "hi");
     await axios
-      .post("http://localhost:4001/api/user/login", { username, password })
+      .post("http://34.233.134.72:4001/api/user/login", { username, password })
       .then((data) => {
         if (!data.data == 0) {
           localStorage.setItem("user", JSON.stringify(data.data));
@@ -31,7 +31,7 @@ export const Login = () => {
         console.log(err);
       });
     axios
-      .post("http://localhost:4001/api/game/user", { username })
+      .post("http://34.233.134.72:4001/api/game/user", { username })
       .then((data) => {
         localStorage.setItem("gamedata", JSON.stringify(data.data));
       });

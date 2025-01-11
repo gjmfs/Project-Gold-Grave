@@ -17,7 +17,7 @@ export const Signup = () => {
     e.preventDefault();
     console.log(username, password);
     await axios
-      .post("http://localhost:4001/api/user/signup", { username, password })
+      .post("http://34.233.134.72:4001/api/user/signup", { username, password })
       .then((data) => {
         if (data.data == 1) {
           alert("User already exists");

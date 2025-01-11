@@ -18,7 +18,7 @@ export const LeaderPage = () => {
       const fetchHighScores = async () => {
         try {
           const response = await axios.get(
-            "http://localhost:4001/api/game/highscores"
+            "http://34.233.134.72:4001/api/game/highscores"
           );
           setHighScores(response.data);
         } catch (error) {

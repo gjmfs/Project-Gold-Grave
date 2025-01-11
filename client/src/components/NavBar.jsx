@@ -30,7 +30,7 @@ export const NavBar = () => {
       if (username.length > 0) {
         console.log(username);
         axios
-          .post("http://localhost:4001/api/game/user", { username })
+          .post("http://34.233.134.72:4001/api/game/user", { username })
           .then((data) => {
             localStorage.setItem("gamedata", JSON.stringify(data.data));
           });
