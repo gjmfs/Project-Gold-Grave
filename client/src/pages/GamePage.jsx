@@ -62,6 +62,7 @@ const SettingsPanel = ({
 export const GamePage = () => {
   const navigate = useNavigate();
   const [chance, setChance] = useState(0);
+  const [times, setTimes] = useState(0);
   const [coins, setCoins] = useState(0);
   const [username, setUsername] = useState("");
   const [gameData, setGameData] = useState([]);
@@ -183,6 +184,7 @@ export const GamePage = () => {
     const nextLevel = levels[level];
     if (nextLevel) {
       levelDataReq(nextLevel);
+      setTimes((prev) => prev + 1);
     }
   };
 
@@ -199,6 +201,7 @@ export const GamePage = () => {
 
       if (response.data) {
         setRes(response.data.updated);
+        setTimes((prev) => prev + 1);
       }
     } catch (error) {
       console.error("Error saving score:", error);
@@ -289,6 +292,8 @@ export const GamePage = () => {
                 onClick={() => {
                   localStorage.removeItem("game");
                   localStorage.removeItem("score");
+                  localStorage.setItem("timesPlayed", times);
+                  console.log(times);
                 }}
               >
                 Give Up
@@ -303,6 +308,8 @@ export const GamePage = () => {
                 onClick={() => {
                   localStorage.removeItem("game");
                   localStorage.removeItem("score");
+                  localStorage.setItem("timesPlayed", times);
+                  console.log(times);
                 }}
               >
                 Give Up

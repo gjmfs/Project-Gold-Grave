@@ -95,7 +95,7 @@ const getHighScores = async (req, res) => {
     const highScores = await GameScore.find()
       .sort({ score: -1 })
       .limit(20)
-      .select("username score updatedAt");
+      .select("username score updatedAt level");
 
     res.json(highScores);
   } catch (error) {

@@ -37,7 +37,7 @@ export const Signup = () => {
         Gold Grave
       </h1>
       <div className="container">
-        <p className="heading">User Signup</p>
+        <p className="heading">Create New User</p>
         <form method="post">
           <div className="row">
             <div className="col-3">

@@ -10,9 +10,11 @@ import { useNavigate } from "react-router-dom";
 
 export const NavBar = () => {
   const [score, setScore] = useState("");
+  const [times, setTimes] = useState(0);
   const navigate = useNavigate();
   useEffect(() => {
     const storedData = localStorage.getItem("username");
+    setTimes(localStorage.getItem("timesPlayed"));
     if (storedData == null) {
       navigate("/login");
     } else {
@@ -37,7 +39,7 @@ export const NavBar = () => {
       }
       setScore(JSON.parse(localStorage.getItem("gamedata")));
     }
-  }, []);
+  }, [times]);
 
   return (
     <nav>
