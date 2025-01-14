@@ -4,7 +4,9 @@
   "main": "",
   "scripts": {
     "client": "cd client && npm run dev",
-    "server": "cd server && nodemon server.js"
+    "server": "cd server && nodemon server.js",
+    "server-i":"npm install",
+    "client-i":"cd client && npm install"
   },
   "author": "mufees-mhd",
   "license": "ISC",
